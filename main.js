@@ -1,12 +1,13 @@
 // Asynchronous function untuk fetch data dari API
 const getProducts = async () => {
     // Fetch data dari API
-    fetch("https://6554347063cafc694fe63a4b.mockapi.io/api/v1/products")
-        .then((response) => response.json())
-        .then((data) => {
-            // simpan di local storage
-            localStorage.setItem('products', JSON.stringify(data));
-        });
+    const response = await fetch("https://6554347063cafc694fe63a4b.mockapi.io/api/v1/products");
+
+    let data = await response.json();
+
+    // store to local storage
+    localStorage.setItem('products', JSON.stringify(data));
+    return data;
 };
 // call
 getProducts();

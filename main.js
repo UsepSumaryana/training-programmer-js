@@ -1,32 +1,44 @@
-const cartItems = [
-    { name: "Mouse", price: 250000 },
-    { name: "Keyboard", price: 300000 },
-    { name: "Monitor", price: 1000000 },
-];
+const products = [
+    { id: 1, name: "Mouse", price: 250000 },
+    { id: 2, name: "Keyboard", price: 300000 },
+    { id: 3, name: "Monitor", price: 1000000 },
+]
 
-let username = "usep";
-let totalCartItem = cartItems.length;
+let cart = JSON.parse(localStorage.getItem('cart')) ?? [];
+
+// hitung jumlah item yang ada di keranjang
+let totalCartItem = cart.length;
 
 // hitung total harga item yang ada di keranjang
-let totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+let totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
 // Fungsi untuk menambahkan item ke keranjang
-function addToCart(name, price) {
-    const newItem = {
-        name: name,
-        price: price,
-    };
+function addToCart(productId) {
+    // ambil data product
+    let product = products.find((product) => product.id == productId);
+    console.log(product);
 
-    cartItems.push(newItem);
+    // cek item cart exist
+    if (cart.length == 0) {
+        cart.push(product);
+    } else {
+        let cartItemExist = cart.find((cartItem) => cartItem.id == productId);
+
+        if (cartItemExist === undefined) {
+            cart.push(product);
+        }
+    }
+
+    // update local storage
+    localStorage.setItem('cart', JSON.stringify(cart));
 
     // refresh data total
-    totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
-    totalCartItem = cartItems.length;
+    totalPrice = cart.reduce((total, item) => total + item.price, 0);
+    totalCartItem = cart.length;
 }
 
 // nyoba panggil
-addToCart("Headset", 150000);
+addToCart(3);
 
-console.log(`Username : ${username}`);
 console.log(`Jumlah Item di Keranjang : ${totalCartItem}`);
 console.log(`Total harga item di keranjang : ${totalPrice}`);

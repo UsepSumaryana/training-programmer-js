@@ -37,12 +37,19 @@ function addToCart(productId) {
     totalCartItem = cart.length;
 }
 
+// penggunaan variabel global untuk menghitung total + ongkos kirim
+const shippingCost = 13000;
+let totalPriceShipping = totalPrice + shippingCost;
+
 // fungsi untuk menghitung total harga setelah diskon
-let getDiscountedTotalPrice = (discount) => totalPrice - discount;
+let getDiscountedTotalPrice = (discount) => totalPriceShipping - discount;
 
 // coba diskon
 let discountedTotalPrice = getDiscountedTotalPrice(200000);
 
+
 console.log(`Jumlah Item di Keranjang : ${totalCartItem}`);
 console.log(`Total harga item di keranjang : ${totalPrice}`);
+console.log(`Total harga dengan ongkos kirim : ${totalPriceShipping}`);
 console.log(`Total harga setelah diskon : ${discountedTotalPrice}`);
+

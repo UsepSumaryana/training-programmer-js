@@ -1,15 +1,50 @@
 // Asynchronous function untuk fetch data dari API
 const getProducts = async () => {
     // Fetch data dari API
-    fetch("https://6554347063cafc694fe63a4b.mockapi.io/api/v1/products")
-        .then((response) => response.json())
-        .then((data) => {
-            // simpan di local storage
-            localStorage.setItem('products', JSON.stringify(data));
-        });
+    const response = await fetch(
+        "https://6554347063cafc694fe63a4b.mockapi.io/api/v1/products"
+    );
+
+    let data = await response.json();
+
+    return data;
 };
 // call
-getProducts();
+getProducts().then(
+    data => {
+        // store to local storage
+        localStorage.setItem("products", JSON.stringify(data));
+    }
+);
+
+const getProductDetail = (productId, callback) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open(
+        "GET",
+        "https://6554347063cafc694fe63a4b.mockapi.io/api/v1/details/" +
+            productId,
+        true
+    );
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let productData = JSON.parse(xhr.responseText);
+                callback("sukses", productData);
+            } else {
+                callback("failed", null);
+            }
+        }
+    };
+
+    xhr.send();
+};
+//call
+getProductDetail(1, (info, data) => {
+    console.log(info);
+    console.log(data);
+});
 
 let products = JSON.parse(localStorage.getItem("products")) ?? [];
 let cart = JSON.parse(localStorage.getItem("cart")) ?? [];
@@ -18,7 +53,10 @@ let cart = JSON.parse(localStorage.getItem("cart")) ?? [];
 let totalCartItem = cart.length;
 
 // hitung total harga item yang ada di keranjang
-let totalPrice = cart.reduce((total, item) => total + parseFloat(item.price), 0);
+let totalPrice = cart.reduce(
+    (total, item) => total + parseFloat(item.price),
+    0
+);
 
 // Fungsi untuk menambahkan item ke keranjang
 function addToCart(productId) {
@@ -41,7 +79,10 @@ function addToCart(productId) {
     localStorage.setItem("cart", JSON.stringify(cart));
 
     // refresh data total
-    totalPrice = cart.reduce((total, item) => total + parseFloat(item.price), 0);
+    totalPrice = cart.reduce(
+        (total, item) => total + parseFloat(item.price),
+        0
+    );
     totalCartItem = cart.length;
 }
 

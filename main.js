@@ -7,19 +7,26 @@ const cartItems = [
 let username = "usep";
 let totalCartItem = cartItems.length;
 
-let totalPrice = 0;
+// hitung total harga item yang ada di keranjang
+let totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
 
-// hitung total harga yang ada di keranjang
-for (const item of cartItems) {
-    totalPrice += item.price;
+// Fungsi untuk menambahkan item ke keranjang
+function addToCart(name, price) {
+    const newItem = {
+        name: name,
+        price: price,
+    };
+
+    cartItems.push(newItem);
+
+    // refresh data total
+    totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+    totalCartItem = cartItems.length;
 }
 
-// pengen di format ke rupiah ah
-let totalInRupiah = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-}).format(totalPrice);
+// nyoba panggil
+addToCart("Headset", 150000);
 
 console.log(`Username : ${username}`);
 console.log(`Jumlah Item di Keranjang : ${totalCartItem}`);
-console.log(`Total harga item di keranjang : ${totalInRupiah}`);
+console.log(`Total harga item di keranjang : ${totalPrice}`);

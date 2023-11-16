@@ -41,12 +41,14 @@ function addToCart(productId) {
 const shippingCost = 13000;
 let totalPriceShipping = totalPrice + shippingCost;
 
-// fungsi untuk menghitung total harga setelah diskon
-let getDiscountedTotalPrice = (discount) => totalPriceShipping - discount;
+// fungsi untuk menghitung total harga setelah diskon dengan scope variabel
+let getDiscountedTotalPrice = () => {
+    const discount = 200000;
+    return totalPriceShipping - discount;
+};
 
 // coba diskon
-let discountedTotalPrice = getDiscountedTotalPrice(200000);
-
+let discountedTotalPrice = getDiscountedTotalPrice();
 
 console.log(`Jumlah Item di Keranjang : ${totalCartItem}`);
 console.log(`Total harga item di keranjang : ${totalPrice}`);

@@ -5,12 +5,15 @@ const getProducts = async () => {
 
     let data = await response.json();
 
-    // store to local storage
-    localStorage.setItem('products', JSON.stringify(data));
     return data;
 };
 // call
-getProducts();
+getProducts().then(
+    data => {
+        // store to local storage
+        localStorage.setItem("products", JSON.stringify(data));
+    }
+);
 
 let products = JSON.parse(localStorage.getItem("products")) ?? [];
 let cart = JSON.parse(localStorage.getItem("cart")) ?? [];

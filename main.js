@@ -1,3 +1,14 @@
+class Product {
+    constructor(data){
+        this.product_id = data.produt_id;
+        this.description = data.description;
+    }
+
+    getDescriptionLength() {
+        return this.description.length;
+    }
+}
+
 // Asynchronous function untuk fetch data dari API
 const getProducts = async () => {
     // Fetch data dari API
@@ -40,10 +51,11 @@ const getProductDetail = (productId, callback) => {
 
     xhr.send();
 };
+
 //call
 getProductDetail(1, (info, data) => {
-    console.log(info);
-    console.log(data);
+    const product = new Product(data);
+    console.log(product.description);
 });
 
 let products = JSON.parse(localStorage.getItem("products")) ?? [];

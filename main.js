@@ -42,13 +42,13 @@ const shippingCost = 13000;
 let totalPriceShipping = totalPrice + shippingCost;
 
 // fungsi untuk menghitung total harga setelah diskon dengan scope variabel
-let getDiscountedTotalPrice = () => {
-    const discount = 200000;
-    return totalPriceShipping - discount;
+let getDiscountedTotalPrice = (discount) => {
+    const couponDiscount = 200000;
+    return totalPriceShipping - discount - couponDiscount;
 };
 
 // coba diskon
-let discountedTotalPrice = getDiscountedTotalPrice();
+let discountedTotalPrice = getDiscountedTotalPrice(200000);
 
 console.log(`Jumlah Item di Keranjang : ${totalCartItem}`);
 console.log(`Total harga item di keranjang : ${totalPrice}`);

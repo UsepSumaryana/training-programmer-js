@@ -1,6 +1,6 @@
 // implementasi class
 class Product {
-    constructor(data){
+    constructor(data) {
         this.product_id = data.produt_id;
         this.description = data.description;
     }
@@ -12,42 +12,51 @@ class Product {
 
 // Asynchronous function untuk fetch data dari API
 const getProducts = async () => {
-    // Fetch data dari API
-    const response = await fetch(
-        "https://6554347063cafc694fe63a4b.mockapi.io/api/v1/products"
-    );
+    try {
+        const response = await fetch(
+            "https://6554347063cafc694fe63a4b.mockapi.io/api/v1/products"
+        );
 
-    let data = await response.json();
+        // Cek apa response ok
+        if (!response.ok) {
+            throw new Error("Error fetching data");
+        }
 
-    return data;
+        let data = await response.json();
+        return data;
+    } catch (error) {
+        // Handle kalo error
+        console.error(error);
+        return [];
+    }
 };
 // call
-getProducts().then(
-    data => {
-        // store to local storage
-        localStorage.setItem("products", JSON.stringify(data));
-    }
-);
+getProducts().then((data) => {
+    // store to local storage
+    localStorage.setItem("products", JSON.stringify(data));
+});
 
+// get product detail
 const getProductDetail = (productId, callback) => {
     const xhr = new XMLHttpRequest();
 
     xhr.open(
         "GET",
-        "https://6554347063cafc694fe63a4b.mockapi.io/api/v1/details/" +
-            productId,
+        `https://6554347063cafc694fe63a4b.mockapi.io/api/v1/detailss/${productId}`,
         true
     );
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                let productData = JSON.parse(xhr.responseText);
-                callback("sukses", productData);
-            } else {
-                callback("failed", null);
-            }
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            let data = JSON.parse(xhr.responseText);
+            callback('success', data);
+        } else {
+            callback(new Error("Request failed with status " + xhr.status));
         }
+    };
+
+    xhr.onerror = function () {
+        callback(new Error("Network error"));
     };
 
     xhr.send();

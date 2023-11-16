@@ -1,3 +1,4 @@
+// implementasi class
 class Product {
     constructor(data){
         this.product_id = data.produt_id;

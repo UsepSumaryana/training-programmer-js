@@ -7,12 +7,8 @@ const cartItems = [
 let username = "usep";
 let totalCartItem = cartItems.length;
 
-let totalPrice = 0;
-
-// hitung total harga yang ada di keranjang
-for (const item of cartItems) {
-    totalPrice += item.price;
-}
+// hitung total harga item yang ada di keranjang
+let totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
 
 // pengen di format ke rupiah ah
 let totalInRupiah = new Intl.NumberFormat("id-ID", {

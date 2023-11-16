@@ -50,6 +50,11 @@ let getDiscountedTotalPrice = (discount) => {
 // coba diskon
 let discountedTotalPrice = getDiscountedTotalPrice(200000);
 
+// checkout handler
+const checkoutHandler = () => {
+    alert(`Total yang harus di bayar : ${discountedTotalPrice}\n\nTerimakasih sudah checkout :)`)
+}
+
 console.log(`Jumlah Item di Keranjang : ${totalCartItem}`);
 console.log(`Total harga item di keranjang : ${totalPrice}`);
 console.log(`Total harga dengan ongkos kirim : ${totalPriceShipping}`);

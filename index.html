@@ -6,7 +6,12 @@
     <title>buat manggil js di browser</title>
 </head>
 <body>
-    lihat console
+    <button id="checkoutButton">Checkout</button>
     <script src="main.js"></script>
+    <script>
+        // event handler
+        const checkoutButton = document.getElementById('checkoutButton');
+        checkoutButton.addEventListener('click', checkoutHandler);
+    </script>
 </body>
 </html>
